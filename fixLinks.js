@@ -39,6 +39,5 @@ for (var quest of questions) {
         if (graderView.querySelector('br') != null) {
             graderView.removeChild(graderView.querySelector('br'));
         }
-        const _ = graderView.offsetheight;
     }
 }
