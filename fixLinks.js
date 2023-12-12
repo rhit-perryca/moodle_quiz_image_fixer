@@ -1,4 +1,6 @@
 questions = document.getElementsByClassName("formulation clearfix");
+var doRotation = true;
+var rotateAmmount = -90;
 for (var quest of questions) {
     //Check if image question
     if (quest.querySelector(".attachments") != null) {
@@ -8,17 +10,23 @@ for (var quest of questions) {
         
         //grab container of answer image
         var graderView = quest.parentElement.querySelector(".graderinfo").querySelector("img").parentElement;
-        var image = graderView.querySelector("img").cloneNode(true);
-        
+        var image = graderView.querySelector("img").cloneNode(true);  
         //style answer image
-        graderView.querySelector('img').style.height = 300;
+        graderView.querySelector('img').style.height = 500;
         graderView.querySelector('img').style.width = 'auto';
-        
-        //add either pdf or image depending on what was submitted
         if (link.includes(".png") || link.includes(".jpg")) {
             image.style.height = "auto";
             image.src = link;
-            graderView.appendChild(image);
+            if(doRotation)
+                image.style.transform = `rotate(${rotateAmmount}deg)`;
+           
+            var newImage = graderView.appendChild(image);
+            newImage.style.width = 'auto';
+            newImage.style.height = '500px';
+            var xCenter = newImage.offsetWidth / 2;
+            var yCenter = newImage.offsetHeight / 2;
+            newImage.style.transformOrigin = `${yCenter}px ${xCenter}px`;
+            const _ = newImage.offsetheight;
         } else if (link.includes('.pdf')) {
             var pdf = document.createElement("iframe");
             pdf.src = link;
@@ -31,5 +39,6 @@ for (var quest of questions) {
         if (graderView.querySelector('br') != null) {
             graderView.removeChild(graderView.querySelector('br'));
         }
+        const _ = graderView.offsetheight;
     }
 }
