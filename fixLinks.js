@@ -22,7 +22,7 @@ for (var quest of questions) {
         //style answer image
         graderView.querySelector('img').style.height = '300px';
         graderView.querySelector('img').style.width = 'auto';
-        if (link.includes(".png") || link.includes(".jpg")) {
+        if (link.includes(".png") || link.includes(".jpg")||link.includes('jpeg')) {
             image.style.height = "auto";
             image.src = link;
             image.style.width='400px';
@@ -45,8 +45,8 @@ for (var quest of questions) {
             pdf.src = link;
             pdf.title = "webviewer";
             pdf.frameBorder = 0;
-            pdf.width = 200;
-            pdf.height = 300;
+            pdf.width = 500;
+            pdf.height = 600;
             graderView.appendChild(pdf);
         }
         if (graderView.querySelector('br') != null) {
