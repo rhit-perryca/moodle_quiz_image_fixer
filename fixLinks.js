@@ -1,6 +1,14 @@
 questions = document.getElementsByClassName("formulation clearfix");
-var doRotation = true;
-var rotateAmmount = -90;
+const rotate = (event)=>{
+    var img = event.target||event.srcElement;
+    var parent = img.parentElement;
+    img.parentElement.removeChild(img);
+    img.rot+=90
+    img.rot=img.rot%360;
+    img.style.transform=`rotate(${img.rot}deg)`;
+    var newImg = parent.appendChild(img);
+    newImg.addEventListener("click",rotate);
+};
 for (var quest of questions) {
     //Check if image question
     if (quest.querySelector(".attachments") != null) {
@@ -12,21 +20,26 @@ for (var quest of questions) {
         var graderView = quest.parentElement.querySelector(".graderinfo").querySelector("img").parentElement;
         var image = graderView.querySelector("img").cloneNode(true);  
         //style answer image
-        graderView.querySelector('img').style.height = 500;
+        graderView.querySelector('img').style.height = '300px';
         graderView.querySelector('img').style.width = 'auto';
         if (link.includes(".png") || link.includes(".jpg")) {
             image.style.height = "auto";
             image.src = link;
-            if(doRotation)
-                image.style.transform = `rotate(${rotateAmmount}deg)`;
-           
-            var newImage = graderView.appendChild(image);
-            newImage.style.width = 'auto';
-            newImage.style.height = '500px';
-            var xCenter = newImage.offsetWidth / 2;
-            var yCenter = newImage.offsetHeight / 2;
-            newImage.style.transformOrigin = `${yCenter}px ${xCenter}px`;
-            const _ = newImage.offsetheight;
+            image.style.width='400px';
+            image.style.height='auto';
+            var newImg = graderView.appendChild(image);
+            var maxHW=Math.max(newImg.height,newImg.width);
+            if(newImg.height<newImg.width){
+                var margins=(maxHW-newImg.height)/2;
+                newImg.style.marginTop=margins+'px';
+                newImg.style.marginBottom=margins+'px';
+            }else{
+                var margins=(maxHW-newImg.width)/2;
+                newImg.style.marginLeft=margins+'px';
+                newImg.style.marginRight=margins+'px';
+            }
+            newImg.rot=0;
+            newImg.addEventListener("click",rotate);
         } else if (link.includes('.pdf')) {
             var pdf = document.createElement("iframe");
             pdf.src = link;
